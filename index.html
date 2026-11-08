@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0E6A70">
+<title>ENT Board — 2nd Part</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#EEF2F3;--surface:#FFFFFF;--ink:#14242B;--muted:#5B6A71;--line:#D3DCDF;--teal:#0E6A70;--teal-soft:#DDEEEE;--ok:#1D7A4C;--ok-soft:#E1F2E8;--amber:#B06A00;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1A1E;--surface:#16252B;--ink:#E4ECEE;--muted:#93A4AA;--line:#2A3D44;--teal:#4FB7B5;--teal-soft:#183A3D;--ok:#5BC48A;--ok-soft:#173326;--amber:#E8A94A;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 60px}
+.kicker{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);font-weight:700}
+h1{font:600 2rem/1.15 Charter,"Iowan Old Style",Georgia,serif;margin:6px 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0}
+.overall{margin:20px 0 6px;display:flex;align-items:baseline;gap:10px}
+.overall b{font:600 1.6rem/1 Charter,Georgia,serif}
+.track{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--teal);border-radius:3px;transition:width .4s}
+.resume{display:flex;align-items:center;gap:12px;margin-top:20px;background:var(--teal);color:#fff;border-radius:14px;padding:14px 16px;text-decoration:none}
+.resume .t{flex:1;min-width:0}
+.resume small{display:block;opacity:.8;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.resume span{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resume .go{font-size:1.4rem}
+@media (prefers-color-scheme:dark){.resume{color:#06201F}}
+.search{margin:20px 0 4px;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font:inherit;color:inherit}
+section{margin-top:28px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:8px}
+.sh h2{font:600 1.3rem/1.2 Charter,Georgia,serif;margin:0}
+.sh .folder{font-size:.78rem;color:var(--muted)}
+.sh .frac{font-size:.85rem;color:var(--muted);white-space:nowrap}
+section > .track{margin-bottom:12px}
+.group{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:16px 2px 6px}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:flex;align-items:center;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row a{flex:1;min-width:0;display:block;padding:13px 4px 13px 14px;color:inherit;text-decoration:none}
+.row a:active{background:var(--teal-soft)}
+.row .name{font-weight:500}
+.row .meta{font-size:.8rem;color:var(--muted)}
+.row .meta .cnt{color:var(--teal);font-weight:600}
+.row .meta .ip{color:var(--amber);font-weight:600}
+.row .meta .sc{color:var(--ok);font-weight:600}
+.row.done .name{color:var(--muted)}
+.chk{flex:none;width:52px;height:52px;border:0;background:none;display:flex;align-items:center;justify-content:center}
+.chk span{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:transparent;transition:all .15s}
+.row.done .chk span{background:var(--ok);border-color:var(--ok);color:#fff}
+.empty{color:var(--muted);text-align:center;padding:30px 10px}
+.foot{margin-top:36px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+.foot .off{display:inline-flex;align-items:center;gap:6px}
+.foot .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.foot .dot.ok{background:var(--ok)}
+@media (prefers-reduced-motion:reduce){.track i,.chk span{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Palestinian &amp; Arab Board</div>
+  <h1>ENT — 2nd Part Exams</h1>
+  <p class="sub" id="sub"></p>
+  <div class="overall"><b id="pct">0%</b><span class="sub" id="frac"></span></div>
+  <div class="track"><i id="bar" style="width:0"></i></div>
+  <div id="resume"></div>
+  <input class="search" id="q" type="search" placeholder="Search exams…" autocomplete="off">
+  <div id="lib"></div>
+  <div class="foot"><span class="off"><i class="dot" id="offdot"></i><span id="offtxt">Preparing offline copy…</span></span><br>Your answers save automatically, so you can close an exam and pick up later. Inside any exam, the ⋮ tab on the right edge takes you back here or starts the exam again. Tap the circle to mark an exam as done.</div>
+</div>
+<script>
+const LIB=[{"title": "Ballenger, Oxford & Brackmann", "folder": "Ballenger, oxford , brackmen exams", "groups": [{"title": "Question banks", "items": [{"id": "ballenger-items", "file": "ballenger-items.html", "name": "Ballenger — Examination Items", "count": null, "orig": "Ballenger_Examination_Items_Interactive_Quiz.html", "kb": 351}, {"id": "brackmann", "file": "brackmann.html", "name": "Brackmann Otologic Surgery — Self-Assessment", "count": null, "orig": "Brackmann_Otologic_Surgery_Interactive_Quiz .html", "kb": 136}, {"id": "sba-323", "file": "sba-323.html", "name": "ENT Single Best Answers", "count": 323, "orig": "ENT_SBA_323_Interactive_Quiz.html", "kb": 1378}]}, {"title": "Exams", "items": [{"id": "pal-mock-1", "file": "pal-mock-1.html", "name": "Palestinian Board Mock — Paper 1", "count": null, "orig": "ENT_Palestinian_Board_Mock_Paper_1.html", "kb": 533}, {"id": "pal-mock-2", "file": "pal-mock-2.html", "name": "Palestinian Board Mock — Paper 2", "count": null, "orig": "ENT_Palestinian_Board_Mock_Paper_2.html", "kb": 352}, {"id": "pal-mock-3", "file": "pal-mock-3.html", "name": "Palestinian Board Mock — Paper 3", "count": null, "orig": "ENT_Palestinian_Board_Mock_Paper_3.html", "kb": 255}, {"id": "pal-mock-4", "file": "pal-mock-4.html", "name": "Palestinian Board Mock — Paper 4", "count": null, "orig": "ENT_Palestinian_Board_Mock_Paper_4.html", "kb": 93}, {"id": "pal-mock-5", "file": "pal-mock-5.html", "name": "Palestinian Board Mock — Paper 5", "count": null, "orig": "ENT_Palestinian_Board_Mock_Paper_5.html", "kb": 107}, {"id": "pal-mock-6", "file": "pal-mock-6.html", "name": "Palestinian Board Mock — Paper 6", "count": null, "orig": "ENT_Palestinian_Board_Mock_Paper_6.html", "kb": 90}]}]}, {"title": "Cummings", "folder": "Cummings", "groups": [{"title": "Question banks", "items": [{"id": "cummings-4", "file": "cummings-4.html", "name": "Cummings Review — 4th edition", "count": 990, "orig": "Cummings4_Review_Interactive.html", "kb": 364}, {"id": "cummings-5", "file": "cummings-5.html", "name": "Cummings Review — 5th edition", "count": 937, "orig": "Cummings5_Review_Interactive.html", "kb": 404}, {"id": "shamsan", "file": "shamsan.html", "name": "Shamsan appendix — Dr. Fouad Shamsan", "count": 314, "orig": "Shamsan_Index_Interactive.html", "kb": 145}]}, {"title": "Cummings exams", "items": [{"id": "cummings-mock-1", "file": "cummings-mock-1.html", "name": "Cummings Mock — Paper 1", "count": null, "orig": "ENT_Board_Mock_Exam_1.html", "kb": 54}, {"id": "cummings-mock-2", "file": "cummings-mock-2.html", "name": "Cummings Mock — Paper 2", "count": null, "orig": "ENT_Board_Mock_Exam_2.html", "kb": 53}, {"id": "cummings-mock-3", "file": "cummings-mock-3.html", "name": "Cummings Mock — Paper 3", "count": null, "orig": "ENT_Board_Mock_Exam_3.html", "kb": 53}, {"id": "cummings-mock-4", "file": "cummings-mock-4.html", "name": "Cummings Mock — Paper 4", "count": null, "orig": "ENT_Board_Mock_Exam_4.html", "kb": 54}, {"id": "cummings-mock-5", "file": "cummings-mock-5.html", "name": "Cummings Mock — Paper 5", "count": null, "orig": "ENT_Board_Mock_Exam_5.html", "kb": 54}]}]}, {"title": "Bailey exams", "folder": "Bailey exams", "groups": [{"title": null, "items": [{"id": "bailey-1", "file": "bailey-1.html", "name": "Bailey Mock — Paper 1", "count": null, "orig": "ENT_Bailey_Mock_Paper_1.html", "kb": 49}, {"id": "bailey-2", "file": "bailey-2.html", "name": "Bailey Mock — Paper 2", "count": null, "orig": "ENT_Bailey_Mock_Paper_2.html", "kb": 47}, {"id": "bailey-3", "file": "bailey-3.html", "name": "Bailey Mock — Paper 3", "count": null, "orig": "ENT_Bailey_Mock_Paper_3.html", "kb": 48}, {"id": "bailey-4", "file": "bailey-4.html", "name": "Bailey Mock — Paper 4", "count": null, "orig": "ENT_Bailey_Mock_Paper_4.html", "kb": 48}, {"id": "bailey-5", "file": "bailey-5.html", "name": "Bailey Mock — Paper 5", "count": null, "orig": "ENT_Bailey_Mock_Paper_5.html", "kb": 48}]}]}, {"title": "Abdalhadi projects", "folder": "Abdalhadi projects", "groups": [{"title": "Question book", "items": [{"id": "abdalhadi-project", "file": "abdalhadi-project.html", "name": "Abdalhadi Project — ENT Board Question Book", "count": null, "orig": "Abdalhadi_Project.html", "kb": 649}]}, {"title": "Exams", "items": [{"id": "abdalhadi-mock-1", "file": "abdalhadi-mock-1.html", "name": "ENT Board Mock 1", "count": null, "orig": "ENT_Board_Mock_1.html", "kb": 51}, {"id": "abdalhadi-mock-2", "file": "abdalhadi-mock-2.html", "name": "ENT Board Mock 2", "count": null, "orig": "ENT_Board_Mock_2.html", "kb": 49}, {"id": "abdalhadi-mock-3", "file": "abdalhadi-mock-3.html", "name": "ENT Board Mock 3", "count": null, "orig": "ENT_Board_Mock_3.html", "kb": 52}, {"id": "abdalhadi-mock-4", "file": "abdalhadi-mock-4.html", "name": "ENT Board Mock 4", "count": null, "orig": "ENT_Board_Mock_4.html", "kb": 49}, {"id": "abdalhadi-mock-5", "file": "abdalhadi-mock-5.html", "name": "ENT Board Mock 5", "count": null, "orig": "ENT_Board_Mock_5.html", "kb": 47}]}]}];
+const KEY='ent-hub-v1';
+let st={done:{},last:{},lastId:null};
+try{st=Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+const all=LIB.flatMap(s=>s.groups.flatMap(g=>g.items));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function ago(ts){if(!ts)return '';const d=Math.floor((Date.now()-ts)/864e5);return d<=0?'opened today':d===1?'opened yesterday':'opened '+d+' days ago'}
+function prog(id){let m=null,h=null;try{m=JSON.parse(localStorage.getItem('entq:'+id+':meta')||'null');h=JSON.parse(localStorage.getItem('entq:'+id+':hist')||'null')}catch(e){}return{m,h}}
+function statusLine(x){const {m,h}=prog(x.id);const p=[];
+  if(x.count)p.push(`<span class="cnt">${x.count} MCQs</span>`);
+  if(m&&m.kind==='mock'&&m.phase==='run')p.push(`<span class="ip">In progress · ${m.ans}/${m.total} answered</span>`);
+  else if(m&&m.kind==='mock'&&m.phase==='done')p.push(`<span class="sc">Last score ${m.ok}/${m.total}</span>`);
+  if(m&&m.kind==='bank'&&m.ans)p.push(`<span class="ip">${m.ans}/${m.total} answered · ${Math.round(m.ok/m.ans*100)}% correct</span>`);
+  if(h&&h.attempts&&!(m&&m.phase==='done'&&h.attempts===1))p.push(`best ${h.best.ok}/${h.best.total}${h.attempts>1?` · ${h.attempts} attempts`:''}`);
+  if(!m&&!h)p.push(st.last[x.id]?ago(st.last[x.id]):'not opened yet');
+  else if(st.last[x.id])p.push(ago(st.last[x.id]));
+  return p.join(' · ')}
+function render(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const done=all.filter(x=>st.done[x.id]).length;
+  const totalQ=all.reduce((t,x)=>t+(x.count||0),0);
+  document.getElementById('sub').textContent=`${all.length} exams in ${LIB.length} folders · ${totalQ.toLocaleString()}+ questions in the big banks`;
+  document.getElementById('pct').textContent=Math.round(done/all.length*100)+'%';
+  document.getElementById('frac').textContent=`${done} of ${all.length} done`;
+  document.getElementById('bar').style.width=(done/all.length*100)+'%';
+  const last=st.lastId&&all.find(x=>x.id===st.lastId);
+  document.getElementById('resume').innerHTML=last&&!q?`<a class="resume" href="${last.file}" data-id="${last.id}"><div class="t"><small>Continue</small><span>${esc(last.name)}</span>${(()=>{const {m}=prog(last.id);return m&&m.ans&&m.phase!=='done'?`<small style="text-transform:none;letter-spacing:0;margin-top:2px">${m.ans} of ${m.total} answered</small>`:''})()}</div><div class="go">›</div></a>`:'';
+  let h='',hits=0;
+  LIB.forEach(s=>{
+    const items=s.groups.flatMap(g=>g.items);
+    const sd=items.filter(x=>st.done[x.id]).length;
+    let body='';
+    s.groups.forEach(g=>{
+      const its=g.items.filter(x=>!q||(x.name+' '+x.orig+' '+s.title+' '+(g.title||'')).toLowerCase().includes(q));
+      if(!its.length)return;hits+=its.length;
+      if(g.title)body+=`<div class="group">${esc(g.title)}</div>`;
+      body+='<div class="list">'+its.map(x=>`<div class="row ${st.done[x.id]?'done':''}"><a href="${x.file}" data-id="${x.id}"><div class="name">${esc(x.name)}</div><div class="meta">${statusLine(x)}</div></a><button class="chk" data-done="${x.id}" aria-label="Mark done" aria-pressed="${!!st.done[x.id]}"><span>✓</span></button></div>`).join('')+'</div>';
+    });
+    if(!body)return;
+    h+=`<section><div class="sh"><div><h2>${esc(s.title)}</h2><div class="folder">${items.length} exams</div></div><div class="frac">${sd}/${items.length} done</div></div><div class="track"><i style="width:${sd/items.length*100}%"></i></div>${body}</section>`;
+  });
+  document.getElementById('lib').innerHTML=hits?h:'<div class="empty">No exam matches your search.</div>';
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-done]');
+  if(b){const id=b.dataset.done;if(st.done[id])delete st.done[id];else st.done[id]=Date.now();save();render();return}
+  const a=e.target.closest('a[data-id]');
+  if(a){st.last[a.dataset.id]=Date.now();st.lastId=a.dataset.id;save()}
+});
+document.getElementById('q').addEventListener('input',render);
+window.addEventListener('pageshow',render);
+render();
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+  navigator.serviceWorker.addEventListener('message',e=>{if(e.data==='cached')checkOffline()});
+}
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+async function checkOffline(){
+  try{const c=await caches.open('ent-exams-v2');const keys=await c.keys();const have=new Set(keys.map(k=>new URL(k.url).pathname.split('/').pop()));
+    const miss=all.filter(x=>!have.has(x.file)).length;
+    document.getElementById('offdot').classList.toggle('ok',!miss);
+    document.getElementById('offtxt').textContent=miss?`Downloading for offline… ${all.length-miss}/${all.length}`:'All exams available offline';
+    if(miss)setTimeout(checkOffline,3000);
+  }catch(e){document.getElementById('offtxt').textContent='Offline copy needs the installed app'}
+}
+checkOffline();
+</script>
+</body>
+</html>
